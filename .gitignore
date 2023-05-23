@@ -1,0 +1,9 @@
+*.metadata
+central-ticket-booking.zip
+central-ticket-booking/target
+central-movies-theatre-service/target
+central-movies-movie-service/target
+central-movies-common-lib/target
+central-movies-booking-service/target
+api-gateway/target
+*.sonarlint

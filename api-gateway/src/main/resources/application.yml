@@ -1,0 +1,50 @@
+server:
+  port: 9595
+  
+spring:
+  application:
+    name: API-GATEWAY-SERVICE
+
+  cloud:
+    gateway:
+      routes:
+      - id: CENTRAL-MOVIES-BOOKING-SERVICE
+        uri: lb://CENTRAL-MOVIES-BOOKING-SERVICE
+        predicates:
+        - Path=/bookings/**
+      - id: 
+        uri: lb://CENTRAL-MOVIES-MOVIE-SERVICE
+        predicates:
+        - Path=/payments/**
+      - id: 
+        uri: lb://CENTRAL-MOVIES-MOVIE-SERVICE
+        predicates:
+        - Path=/api/v1/movies/**
+      - id: 
+        uri: lb://CENTRAL-MOVIES-MOVIE-SERVICE
+        predicates:
+        - Path=/api/v1/users/**
+      - id: 
+        uri: lb://CENTRAL-MOVIES-MOVIE-SERVICE
+        predicates:
+        - Path=/api/v1/**
+      - id: 
+        uri: lb://CENTRAL-MOVIES-MOVIE-SERVICE
+        predicates:
+        - Path=/api/v1/v3/api-docs/**
+      - id: 
+        uri: lb://CENTRAL-MOVIE-THEATRE-SERVICE
+        predicates:
+        - Path=/api/v2/**
+      - id: 
+        uri: lb://CENTRAL-MOVIE-THEATRE-SERVICE
+        predicates:
+        - Path=/api/v2/v3/api-docs/**
+      - id: 
+        uri: lb://CENTRAL-MOVIES-BOOKING-SERVICE
+        predicates:
+        - Path=/api/v3/**
+      - id: 
+        uri: lb://CENTRAL-MOVIES-BOOKING-SERVICE
+        predicates:
+        - Path=/api/v3/v3/api-docs/**
