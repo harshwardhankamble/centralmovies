@@ -13,4 +13,6 @@ public interface BookingService {
 	
 	public List<Booking> getBookingHistory(Integer userId);
 	
+	public List<Booking> getAllBookingsInTheatre(Integer theatreId);
+	
 }

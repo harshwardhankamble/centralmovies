@@ -129,4 +129,10 @@ public class BookingServiceImpl implements BookingService {
 		return bookingRepository.findByUserUserId(userId);
 	}
 
+	@Override
+	public List<Booking> getAllBookingsInTheatre(Integer theatreId) {
+		
+		return bookingRepository.findBookingsByTheatreId(theatreId);
+	}
+
 }

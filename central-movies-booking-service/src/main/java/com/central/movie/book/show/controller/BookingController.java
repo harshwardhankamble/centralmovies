@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -60,6 +61,13 @@ public class BookingController {
 	public ResponseEntity<List<BookingDto>> getBookingHistory(@RequestParam Integer userId) {
 		
 		return ResponseEntity.ok(convertEntityToDtos(bookingService.getBookingHistory(userId)));
+	}
+	
+	@AccessControl(roles = {Constants.MANAGER})
+	@GetMapping("/theatre/{theatreId}")
+	public List<BookingDto> getAllBookingsInTheatre(@RequestParam Integer userId, @PathVariable Integer theatreId) {
+		
+		return convertEntityToDtos(bookingService.getAllBookingsInTheatre(theatreId));
 	}
 	
 	private Booking convertDtoToEntity(BookingDto bookingDto) {

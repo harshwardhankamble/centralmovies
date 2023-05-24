@@ -4,6 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -27,4 +29,8 @@ public class Screen {
 	private Integer totalSeats;
 	
 	private Double screenTicketRate;
+	
+	@ManyToOne
+	@JoinColumn(name = "theatreId")
+	private Theatre theatre;
 }
