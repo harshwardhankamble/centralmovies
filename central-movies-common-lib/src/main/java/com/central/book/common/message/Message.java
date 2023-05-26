@@ -29,6 +29,8 @@ public class Message {
 	public static final String WALLET_NOT_FOUND = "Wallet not found for User id: {0}";
 
 	public static final String UNAUTHROIZED_ACCESS = "Unauthorized user access: Access Denied";
+
+	public static final String INVALID_CREDENTIALS = "Please enter valid username and password";
 	
 	public static String formatMessage(String message, Object ...args) {
 		

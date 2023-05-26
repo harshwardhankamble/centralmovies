@@ -28,7 +28,7 @@ public class AuthenticationAspect {
 
 			MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
 			Method method = methodSignature.getMethod();
-			if (!method.getName().equals("registerNewUser")) {
+			if (!method.getName().equals("registerNewUser") && !method.getName().equals("validateCredentialsAndGenerateAccessToken")) {
 				Integer userId = (Integer) joinPoint.getArgs()[0];
 				String[] roles = null;
 				boolean accessAllowed = true;

@@ -1,8 +1,11 @@
 package com.central.movie.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.central.book.common.dto.UserDto;
 import com.central.book.common.entity.Role;
 import com.central.book.common.entity.User;
 import com.central.book.common.exception.ContentNotFoundException;
@@ -11,6 +14,8 @@ import com.central.book.common.message.Message;
 import com.central.movie.repository.RoleRepository;
 import com.central.movie.repository.UserRepository;
 import com.central.movie.service.UserService;
+
+import jakarta.transaction.Transactional;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -64,6 +69,32 @@ public class UserServiceImpl implements UserService {
 			throw new ContentNotFoundException(Message.formatMessage(Message.USER_NOT_FOUND, "User Id", userId));
 		}
 		return user;
+	}
+
+	@Override
+	@Transactional
+	public void changeRoleOfUser(Integer userId, Integer roleId) {
+		if (!userRepository.existsById(userId)) {
+			throw new ContentNotFoundException(Message.formatMessage(Message.USER_NOT_FOUND, "User Id", userId));
+		}
+		
+		userRepository.changeUserRole(userId, roleId);
+	}
+
+	@Override
+	public User validateCredentialsAndGenerateAccessToken(UserDto userDto) {
+		User user = userRepository.findByUserNameAndPassword(userDto.getUserName(), userDto.getPassword());
+		if (user == null) {
+			throw new ContentNotFoundException(Message.INVALID_CREDENTIALS);
+		}
+		
+		return user;
+	}
+
+	@Override
+	public List<User> getAllCustomers() {
+		
+		return userRepository.findByRoleRoleId(2);
 	}
 
 }

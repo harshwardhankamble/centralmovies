@@ -1,5 +1,7 @@
 package com.central.movie.controller;
 
+import java.util.List;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
@@ -7,8 +9,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.central.book.common.constant.Constants;
@@ -52,11 +56,35 @@ public class UserController {
 		userService.registerNewUser(user);
 	}
 	
+	@PutMapping("/{userId}/role/{roleId}")
+	public void changeRoleOfUser(@PathVariable Integer userId, @PathVariable Integer roleId) {
+		
+		userService.changeRoleOfUser(userId, roleId);
+	}
+	
+	
 	@AccessControl(roles = {Constants.ADMIN, Constants.CUSTOMER, Constants.MANAGER})
 	@GetMapping("/{userId}")
 	public ResponseEntity<UserDto> getUserDetails(@PathVariable Integer userId) {
 		
 		return ResponseEntity.ok().body(convertEntityToDto(userService.getUserDetailsById(userId)));
+	}
+	
+	@AccessControl(roles = {Constants.ADMIN, Constants.CUSTOMER, Constants.MANAGER})
+	@PostMapping("/login")
+	public ResponseEntity<UserDto> validateCredentialsAndGenerateAccessToken(@RequestBody UserDto userDto){
+		
+		User user = userService.validateCredentialsAndGenerateAccessToken(userDto);
+		userDto = convertEntityToDto(user);
+		userDto.setPassword(null);
+		return ResponseEntity.ok(userDto);
+	}
+	
+	@AccessControl(roles = {Constants.ADMIN})
+	@GetMapping("/customers")
+	public ResponseEntity<List<UserDto>> getAllCustomers(@RequestParam Integer userId) {
+		
+		return ResponseEntity.ok(convertEntityToDtos(userService.getAllCustomers()));
 	}
 	
 	private User convertDtoToEntity(UserDto userDto) {
@@ -70,6 +98,11 @@ public class UserController {
 		UserDto userDto = modelMapper.map(user, UserDto.class);
 		userDto.setRoleName(user.getRole() != null ? user.getRole().getRoleName() : null);
 		return userDto;
+	}
+	
+	private List<UserDto> convertEntityToDtos(List<User> users) {
+		
+		return users.stream().map(this::convertEntityToDto).toList();
 	}
 
 }
