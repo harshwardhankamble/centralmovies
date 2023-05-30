@@ -11,5 +11,11 @@ public class ShowScreenTimeDto {
 	
 	private String showDateTime;
 	
+	private String screenName;
+	
+	private String showDate;
+	
+	private String showTime;
+	
 	private ShowStatus showStatus;
 }

@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.Size;
 
 import com.central.book.common.enums.Genre;
 import com.central.book.common.enums.MovieStatus;
@@ -49,6 +50,7 @@ public class Movie {
 
 	private Float totalHours;
 
+	@Size(max = 10000)
 	private String movieDescription;
 
 	private String trailerUrl;

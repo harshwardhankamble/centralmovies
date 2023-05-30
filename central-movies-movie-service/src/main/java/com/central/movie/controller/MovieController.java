@@ -1,5 +1,6 @@
 package com.central.movie.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -22,6 +23,7 @@ import com.central.book.common.dto.ReviewDto;
 import com.central.book.common.entity.Movie;
 import com.central.book.common.entity.Review;
 import com.central.book.common.exception.GlobalExceptionResponseEntity;
+import com.central.book.common.util.CentralMovieUtil;
 import com.central.movie.aop.AccessControl;
 import com.central.movie.service.MovieService;
 
@@ -85,8 +87,17 @@ public class MovieController {
 	}
 	
 	private MovieDto convertEntityToDto(Movie movie) {
-		
-		return modelMapper.map(movie, MovieDto.class);
+		MovieDto movieDto = modelMapper.map(movie, MovieDto.class);
+		List<ReviewDto> reviewDtos = new ArrayList<>();
+		for(Review review: movie.getReviews()) {
+			ReviewDto reviewDto = new ReviewDto();
+			reviewDto.setReviewId(review.getReviewId());
+			reviewDto.setReviewComment(review.getReviewComment());
+			reviewDto.setReviewDateTime(CentralMovieUtil.convertDateToString(review.getReviewDateTime(), "yyyy-MM-dd HH:mm"));
+			reviewDtos.add(reviewDto);
+		}
+		movieDto.setReviews(reviewDtos);
+		return movieDto;
 	}
 	
 	private List<MovieDto> convertEntityToDtos(List<Movie> movies) {

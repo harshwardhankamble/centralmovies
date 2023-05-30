@@ -91,12 +91,20 @@ public class ShowController {
 		showService.changeShowStatus(showId, status);
 	}
 	
+	@AccessControl(roles = {Constants.ADMIN, Constants.MANAGER, Constants.CUSTOMER})
+	@GetMapping("/movie/{movieId}")
+	public ResponseEntity<List<ShowDto>> getShowsByMovieId(@RequestParam Integer userId, @PathVariable Integer movieId) {
+		
+		return ResponseEntity.ok(convertEntityToDtos(showService.getShowsByMovieId(movieId)));
+	}
+	
 	private ShowDto convertEntityToDto(Show show) {
 		modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
 		ShowDto showDto = modelMapper.map(show, ShowDto.class);
 		if (show.getMovie() != null) {
 			showDto.setMovieId(show.getMovie().getMovieId());
 			showDto.setMovieName(show.getMovie().getMovieName());
+			showDto.setPosterImageString(show.getMovie().getPosterImage());
 		}
 		
 		showDto.setShowTime(new ArrayList<>());
@@ -106,8 +114,10 @@ public class ShowController {
 		for(ShowScreenTime showScreenTime: show.getShowTime()) {
 			ShowScreenTimeDto screenTimeDto = new ShowScreenTimeDto();
 			screenTimeDto.setScreenId(showScreenTime.getShowScreenTimeId().getScreen().getScreenId());
+			screenTimeDto.setScreenName(showScreenTime.getShowScreenTimeId().getScreen().getScreenName());
 			screenTimeDto.setShowDateTime(CentralMovieUtil.convertDateToString(showScreenTime.getShowScreenTimeId().getShowDateTime(), "dd-mm-yyyy HH:MM"));
 			screenTimeDto.setShowStatus(showScreenTime.getShowStatus());
+			showDto.setTheatreName(showScreenTime.getShowScreenTimeId().getScreen().getTheatre().getTheatreName());;
 			showTime.add(screenTimeDto);
 		}
 		
@@ -137,7 +147,7 @@ public class ShowController {
 			Screen screen = new Screen();
 			screen.setScreenId(showScreenTimeDto.getScreenId());
 			screenTimeId.setScreen(screen);
-			screenTimeId.setShowDateTime(CentralMovieUtil.convertStringToDate(showScreenTimeDto.getShowDateTime(), "dd-mm-yyyy HH:MM"));
+			screenTimeId.setShowDateTime(CentralMovieUtil.convertStringToDate(showScreenTimeDto.getShowDate() + ' ' + showScreenTimeDto.getShowTime(), "dd-mm-yyyy HH:MM"));
 			showScreenTime.setShowScreenTimeId(screenTimeId);
 			showScreenTime.setShowStatus(showScreenTimeDto.getShowStatus());
 			showTime.add(showScreenTime);

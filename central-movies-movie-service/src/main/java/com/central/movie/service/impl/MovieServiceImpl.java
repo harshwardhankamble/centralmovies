@@ -1,5 +1,6 @@
 package com.central.movie.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +42,15 @@ public class MovieServiceImpl implements MovieService {
 
 	@Override
 	public void addNewMovie(Movie movie) {
+		List<Review> reviews = movie.getReviews();
+		movie.setReviews(null);
+		movie = movieRepository.save(movie);
 		
+		for(Review review: reviews) {
+			review.setMovie(movie);
+			review.setReviewDateTime(new Date());
+		}
+		movie.setReviews(reviews);
 		movieRepository.save(movie);
 	}
 

@@ -16,8 +16,12 @@ public class ShowDto {
 	private Integer movieId;
 	
 	private String movieName;
+	
+	private String posterImageString;
 
 	private Date startingDate;
+	
+	private String theatreName;
 	
 	private List<ShowScreenTimeDto> showTime = new ArrayList<>();
 	

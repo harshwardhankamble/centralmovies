@@ -19,4 +19,6 @@ public interface ShowService {
 
 	public void changeShowStatus(Integer showId, ShowStatus status);
 
+	public List<Show> getShowsByMovieId(Integer movieId);
+
 }

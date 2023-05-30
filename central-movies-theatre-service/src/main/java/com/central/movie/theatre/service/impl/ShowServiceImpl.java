@@ -112,4 +112,10 @@ public class ShowServiceImpl implements ShowService {
 			throw new ContentNotFoundException(Message.formatMessage(Message.SHOW_NOT_FOUND, showId));	
 		
 	}
+
+	@Override
+	public List<Show> getShowsByMovieId(Integer movieId) {
+		
+		return showRepository.findByMovieMovieId(movieId);
+	}
 }
