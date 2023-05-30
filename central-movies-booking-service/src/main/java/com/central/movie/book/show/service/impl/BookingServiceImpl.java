@@ -75,7 +75,7 @@ public class BookingServiceImpl implements BookingService {
 			}
 		}
 		
-		ShowScreenTime showScreenTime = showScreenTimeRepository.findByShowScreenTimeIdScreenScreenIdAndShowScreenTimeIdShowDateTime(screen.getScreenId(), bookingDto.getShowDateTime("dd-mm-yyyy HH:MM"));
+		ShowScreenTime showScreenTime = showScreenTimeRepository.findByShowScreenTimeIdScreenScreenIdAndShowScreenTimeIdShowDateTime(screen.getScreenId(), bookingDto.getShowDateTime("dd-MM-yyyy HH:mm"));
 		if (showScreenTime == null) {
 			throw new ContentNotFoundException(Message.formatMessage(Message.SHOW_NOT_FOUND_FOR_TIME, bookingDto.getShowDateTimeString()));
 		}

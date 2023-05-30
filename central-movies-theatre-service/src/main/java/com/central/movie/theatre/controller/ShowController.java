@@ -115,7 +115,7 @@ public class ShowController {
 			ShowScreenTimeDto screenTimeDto = new ShowScreenTimeDto();
 			screenTimeDto.setScreenId(showScreenTime.getShowScreenTimeId().getScreen().getScreenId());
 			screenTimeDto.setScreenName(showScreenTime.getShowScreenTimeId().getScreen().getScreenName());
-			screenTimeDto.setShowDateTime(CentralMovieUtil.convertDateToString(showScreenTime.getShowScreenTimeId().getShowDateTime(), "dd-mm-yyyy HH:MM"));
+			screenTimeDto.setShowDateTime(CentralMovieUtil.convertDateToString(showScreenTime.getShowScreenTimeId().getShowDateTime(), "dd-MM-yyyy HH:mm"));
 			screenTimeDto.setShowStatus(showScreenTime.getShowStatus());
 			showDto.setTheatreName(showScreenTime.getShowScreenTimeId().getScreen().getTheatre().getTheatreName());;
 			showTime.add(screenTimeDto);
@@ -147,7 +147,7 @@ public class ShowController {
 			Screen screen = new Screen();
 			screen.setScreenId(showScreenTimeDto.getScreenId());
 			screenTimeId.setScreen(screen);
-			screenTimeId.setShowDateTime(CentralMovieUtil.convertStringToDate(showScreenTimeDto.getShowDate() + ' ' + showScreenTimeDto.getShowTime(), "dd-mm-yyyy HH:MM"));
+			screenTimeId.setShowDateTime(CentralMovieUtil.convertStringToDate(showScreenTimeDto.getShowDate() + ' ' + showScreenTimeDto.getShowTime(), "dd-MM-yyyy HH:mm"));
 			showScreenTime.setShowScreenTimeId(screenTimeId);
 			showScreenTime.setShowStatus(showScreenTimeDto.getShowStatus());
 			showTime.add(showScreenTime);

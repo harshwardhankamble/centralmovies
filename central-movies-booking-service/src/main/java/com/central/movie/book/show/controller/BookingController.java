@@ -57,7 +57,7 @@ public class BookingController {
 	}
 	
 	@AccessControl(roles = {Constants.ADMIN, Constants.MANAGER, Constants.CUSTOMER})
-	@GetMapping("/history/{userId}")
+	@GetMapping("/history")
 	public ResponseEntity<List<BookingDto>> getBookingHistory(@RequestParam Integer userId) {
 		
 		return ResponseEntity.ok(convertEntityToDtos(bookingService.getBookingHistory(userId)));

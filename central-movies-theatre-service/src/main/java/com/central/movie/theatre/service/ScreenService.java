@@ -11,4 +11,6 @@ public interface ScreenService {
 	public void addNewScreen(Screen screen);
 
 	public Screen getScreenById(Integer screenId);
+
+	public int getTotalNumberOfSeatsByScreenId(Integer screenId);
 }

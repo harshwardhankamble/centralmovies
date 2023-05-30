@@ -39,6 +39,12 @@ public class ScreenServiceImpl implements ScreenService {
 		else 
 			throw new ContentNotFoundException(Message.formatMessage(Message.SCREEN_NOT_FOUND, screenId));
 	}
+
+	@Override
+	public int getTotalNumberOfSeatsByScreenId(Integer screenId) {
+		Screen screen = getScreenById(screenId);
+		return screen.getTotalSeats();
+	}
 	
 	
 

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -49,6 +50,13 @@ public class ScreenController {
 	public void addNewScreen(@RequestParam Integer userId, @RequestBody ScreenDto screenDto) {
 		screenService.addNewScreen(convertDtoToEntity(screenDto));
 	}
+	
+	@AccessControl(roles = {Constants.ADMIN, Constants.CUSTOMER, Constants.MANAGER})
+	@GetMapping("/{screenId}/seats")
+	public int getTotalNumberOfSeatsByScreenId(@RequestParam Integer userId, @PathVariable Integer screenId) {
+		return screenService.getTotalNumberOfSeatsByScreenId(screenId);
+	}
+	
 	
 	private ScreenDto convertEntityToDto(Screen screen) {
 		

@@ -100,4 +100,10 @@ public class PaymentServiceImpl implements PaymentService {
 		
 	}
 
+	@Override
+	public Wallet getWalletInfo(Integer userId) {
+		
+		return walletRepository.findByUserUserId(userId);
+	}
+
 }
