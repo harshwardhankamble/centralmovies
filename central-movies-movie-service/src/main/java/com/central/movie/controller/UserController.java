@@ -56,10 +56,11 @@ public class UserController {
 		userService.registerNewUser(user);
 	}
 	
-	@PutMapping("/{userId}/role/{roleId}")
-	public void changeRoleOfUser(@PathVariable Integer userId, @PathVariable Integer roleId) {
+	@AccessControl(roles = {Constants.ADMIN})
+	@PutMapping("/{clientId}/role/{roleId}")
+	public void changeRoleOfUser(@RequestParam Integer userId, @PathVariable Integer clientId, @PathVariable Integer roleId) {
 		
-		userService.changeRoleOfUser(userId, roleId);
+		userService.changeRoleOfUser(clientId, roleId);
 	}
 	
 	
@@ -85,6 +86,13 @@ public class UserController {
 	public ResponseEntity<List<UserDto>> getAllCustomers(@RequestParam Integer userId) {
 		
 		return ResponseEntity.ok(convertEntityToDtos(userService.getAllCustomers()));
+	}
+	
+	@AccessControl(roles = {Constants.ADMIN, Constants.CUSTOMER, Constants.MANAGER})
+	@GetMapping("/{userId}/role")
+	public String getUserRole(@PathVariable Integer userId) {
+		
+		return userService.getUserRoleByUserId(userId);
 	}
 	
 	private User convertDtoToEntity(UserDto userDto) {

@@ -94,7 +94,16 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List<User> getAllCustomers() {
 		
-		return userRepository.findByRoleRoleId(2);
+		return userRepository.findByRoleRoleIdNot(1);
+	}
+
+	@Override
+	public String getUserRoleByUserId(Integer userId) {
+		User user = getUserDetailsById(userId);
+		if (user.getRole() != null) {
+			return user.getRole().getRoleName();
+		}
+		return null;
 	}
 
 }

@@ -20,4 +20,6 @@ public interface UserService {
 	public User validateCredentialsAndGenerateAccessToken(UserDto userDto);
 
 	public List<User> getAllCustomers();
+
+	public String getUserRoleByUserId(Integer userId);
 }
